@@ -15,5 +15,8 @@ Route::get('/login', function () {
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::get('/', [PokemonController::class, 'index'])->name('home');
-Route::get('/pokemon/{id?}', [PokemonController::class, 'getPokemon']);
-Route::get('/pokemon/{name?}', [PokemonController::class, 'getPokemon']);
+
+Route::prefix('pokemon')->controller(PokemonController::class)->group(function () {
+    Route::get('/{id?}', 'getPokemonById')->name('showbyid');
+    Route::get('/{name?}', 'getPokemonByName')->name('showbyname');
+});
